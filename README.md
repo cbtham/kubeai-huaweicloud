@@ -13,16 +13,16 @@ In this example, we will use KubeAI powered by Huawei Cloud CCE with a GPU node.
 This is good for: 
 🚀 LLM Inferencing - Operate vLLM and Ollama servers\
 🎙️ Speech Processing - Transcribe audio with FasterWhisper\
-🔢 Vector Embeddings - Generate embeddings with Infinity
-⚡️ Intelligent Scaling - Scale from zero to meet demand
-📊 Optimized Routing - Dramatically improves performance at scale (see paper)
-💾 Model Caching - Automates downloading & mounting (EFS, etc.)
-🧩 Dynamic Adapters - Orchestrates LoRA adapters across replicas
-📨 Event Streaming - Integrates with Kafka, PubSub, and more
-
-🔗 OpenAI Compatible - Works with OpenAI client libraries
-🛠️ Zero Dependencies - Does not require Istio, Knative, etc.
-🖥 Hardware Flexible - Runs on CPU, GPU, or TPU
+🔢 Vector Embeddings - Generate embeddings with Infinity\
+⚡️ Intelligent Scaling - Scale from zero to meet demand\
+📊 Optimized Routing - Dramatically improves performance at scale)\
+💾 Model Caching - Automates downloading & mounting (Huawei Cloud SFS, etc.)\
+🧩 Dynamic Adapters - Orchestrates LoRA adapters across replicas\
+📨 Event Streaming - Integrates with Kafka, PubSub, and more\
+<br />
+🔗 OpenAI Compatible - Works with OpenAI client libraries\
+🛠️ Zero Dependencies - Does not require Istio, Knative, etc.\
+🖥 Hardware Flexible - Runs on CPU, GPU, or TPU\
 
 ## Pre-requisite
 Before running this, ensure you have the following,
