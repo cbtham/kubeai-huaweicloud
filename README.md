@@ -11,9 +11,9 @@ KubeAI inferece operator allows you to run, manage and host LLMs easily on Kuber
 In this example, we will use KubeAI powered by Huawei Cloud CCE with a GPU node.
 
 This is good for: 
-🚀 LLM Inferencing - Operate vLLM and Ollama servers__
-🎙️ Speech Processing - Transcribe audio with FasterWhisper__
-🔢 Vector Embeddings - Generate embeddings with Infinity__
+🚀 LLM Inferencing - Operate vLLM and Ollama servers\
+🎙️ Speech Processing - Transcribe audio with FasterWhisper\
+🔢 Vector Embeddings - Generate embeddings with Infinity
 ⚡️ Intelligent Scaling - Scale from zero to meet demand
 📊 Optimized Routing - Dramatically improves performance at scale (see paper)
 💾 Model Caching - Automates downloading & mounting (EFS, etc.)
