@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-obs-open-webui
+  labels:
+    app: kubeai
+  annotations:
+    pv.kubernetes.io/provisioned-by: everest-csi-provisioner
+spec:
+  capacity:
+    storage: 50Gi # Specify Storage
+  csi:
+    driver: obs.csi.everest.io
+    volumeHandle: some-name-obs-bucket # OBS bucket name
+    fsType: obsfs
+    volumeAttributes:
+      everest.io/obs-volume-type: STANDARD
+      everest.io/region: ap-southeast-3
+      storage.kubernetes.io/csiProvisionerIdentity: everest-csi-provisioner
+      # everest.io/enterprise-project-id: 00000-00000-00000-0000 # Optional Enterprise Project ID
+    nodePublishSecretRef:
+      name: aksk-secret # Name of secret to match secrets-aksk
+      namespace: kubeai # Namespace
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: csi-obs
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: kubeai
+  name: pvc-obs-open-webui
+  annotations:
+    csi.storage.k8s.io/fstype: obsfs
+    csi.storage.k8s.io/node-publish-secret-name: aksk-secret # Name of secret to match secrets-aksk
+    csi.storage.k8s.io/node-publish-secret-namespace: kubeai # Namespace
+    everest.io/obs-volume-type: STANDARD
+    volume.beta.kubernetes.io/storage-provisioner: everest-csi-provisioner
+    # everest.io/enterprise-project-id: 00000-00000-00000-0000 # Optional Enterprise Project ID
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi # Specify Storage Amount
+  volumeName: pv-obs-open-webui
+  storageClassName: csi-obs
+  volumeMode: Filesystem
