@@ -4,6 +4,8 @@ For more information about the open-source project, refer https://github.com/sub
 
 ![KubeAI Architecuture](./architecture/arch.excalidraw.png)
 
+![KubeAI on CCE Architecuture](./architecture/kubeai-cce.png)
+
 ## Overview
 KubeAI inferece operator allows you to run, manage and host LLMs easily on Kubernetes clusters on CPU or GPU(Nvidia, AMD) and even NPU and TPUs.
 In this example, we will use KubeAI powered by Huawei Cloud CCE with a GPU node.
