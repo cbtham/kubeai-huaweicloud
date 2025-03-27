@@ -43,4 +43,6 @@ Before running this, ensure you have the following,
 5. Create a Load Balancer service to access open-webui
    ```kubectl create -f elb-svc.yaml -n kubeai```
 6. Visit the public ip shown at elb-svc-openwebui at CCE > Services & ingress.
-   ![open-webui](./architecture/open-webui-cce.png)
+
+   
+   ![open-webui](./architecture/open-webui-cce.png){:height="50%" width="50%"}
