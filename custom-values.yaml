@@ -1,0 +1,28 @@
+resourceProfiles:
+  nvidia-gpu-t4:
+    imageName: "nvidia-gpu"
+    limits:
+      nvidia.com/gpu: "1"
+    requests:
+      nvidia.com/gpu: "1"
+      
+open-webui:
+  persistence:
+    enabled: true
+    size: 50Gi
+    # -- Use existingClaim if you want to re-use an existing Open WebUI PVC instead of creating a new one
+    existingClaim: "pvc-obs-open-webui"
+    # -- Subdirectory of Open WebUI PVC to mount. Useful if root directory is not empty.
+    subPath: ""
+    # -- If using multiple replicas, you must update accessModes to ReadWriteMany
+    accessModes:
+      - ReadWriteMany
+    storageClass: "csi-obs"
+    selector: {}
+    annotations:
+        csi.storage.k8s.io/fstype: obsfs
+        csi.storage.k8s.io/node-publish-secret-name: aksk-secret # Name of secret to match secrets-aksk
+        csi.storage.k8s.io/node-publish-secret-namespace: kubeai # Namespace
+        everest.io/obs-volume-type: STANDARD
+        volume.beta.kubernetes.io/storage-provisioner: everest-csi-provisioner
+        # everest.io/enterprise-project-id: 00000000-00000-0000000-0000 # OPTIONAL Enterprise Project ID
