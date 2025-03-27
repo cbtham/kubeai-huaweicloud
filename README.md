@@ -22,7 +22,7 @@ This is good for:
 <br />
 🔗 OpenAI Compatible - Works with OpenAI client libraries\
 🛠️ Zero Dependencies - Does not require Istio, Knative, etc.\
-🖥 Hardware Flexible - Runs on CPU, GPU, or TPU\
+🖥 Hardware Flexible - Runs on CPU, GPU, or TPU
 
 ## Pre-requisite
 Before running this, ensure you have the following,
