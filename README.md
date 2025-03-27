@@ -2,9 +2,9 @@
 Deploy and scale machine learning models on Kubernetes. Built for LLMs, embeddings, and speech-to-text.
 For more information about the open-source project, refer https://github.com/substratusai/kubeai
 
-![KubeAI Architecuture](./architecture/arch.excalidraw.png)
-
 ![KubeAI on CCE Architecuture](./architecture/kubeai-cce.png)
+
+![KubeAI Architecuture](./architecture/arch.excalidraw.png)
 
 ## Overview
 KubeAI inferece operator allows you to run, manage and host LLMs easily on Kubernetes clusters on CPU or GPU(Nvidia, AMD) and even NPU and TPUs.
