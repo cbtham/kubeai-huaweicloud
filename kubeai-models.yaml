@@ -1,0 +1,30 @@
+catalog:
+  deepseek-r1-1.5b-cpu:
+    enabled: true
+    features: [TextGeneration]
+    url: 'ollama://deepseek-r1:1.5b'
+    engine: OLlama
+    minReplicas: 1
+    resourceProfile: 'cpu:1'
+  deepseek-r1-1.5b-gpu:
+    enabled: true
+    features: [TextGeneration]
+    url: 'ollama://deepseek-r1:1.5b'
+    engine: OLlama
+    minReplicas: 1
+    resourceProfile: 'nvidia-gpu-t4:1'
+  gemma-3-12b-ollama-l4:
+    enabled: true
+    features: [TextGeneration]
+    url: 'ollama://gemma3:12b'
+    engine: OLlama
+    resourceProfile: 'nvidia-gpu-t4:1'
+  # llama-3.1-8b-instruct-fp8-l4:
+  #   enabled: true
+  #   engine: VLLM
+  #   resourceProfile: nvidia-gpu-any
+  #   minReplicas: 1
+  qwen2-500m-cpu:
+    enabled: true
+  nomic-embed-text-cpu:
+    enabled: true
