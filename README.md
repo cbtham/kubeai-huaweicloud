@@ -44,4 +44,4 @@ Before running this, ensure you have the following,
    ```kubectl create -f elb-svc.yaml -n kubeai```
 6. Visit the public ip shown at elb-svc-openwebui at CCE > Services & ingress.
 <br />
-   <img src="./architecture/open-webui-cce.png" alt="open-webui" style="width:50%; height:auto;">
+      <img src="./architecture/open-webui-cce.png" alt="open-webui" style="width:60%; height:auto;">
