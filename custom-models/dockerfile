@@ -1,40 +1,19 @@
 FROM swr.ap-southeast-3.myhuaweicloud.com/codearts-demo/ollama/ollama:0.6.3-01042025
-# FROM ollama/ollama:latest
 
-# Install curl (needed for health check)
+# Install curl for health checks
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Model to be downloaded.
+# Set and extract model name
 ARG MODEL_URL="ollama://sailor2:1b"
+RUN echo "${MODEL_URL#*//}" > /model_name.txt
 
-# Ensure MODEL_URL is set
-RUN test -n "${MODEL_URL}"
-
-# Extract model name and store it in a file
-RUN echo "Extracting model name from: ${MODEL_URL}" && \
-    MODEL_NAME="${MODEL_URL#*//}" && \
-    echo "$MODEL_NAME" > /model_name.txt && \
-    echo "Extracted Model Name: $(cat /model_name.txt)"
-
-# Set the extracted model name as an environment variable
-ENV OLLAMA_MODEL_NAME="sailor2:1b"
-
-# Debugging: Print the extracted model name
-RUN echo "Final Model Name: $OLLAMA_MODEL_NAME"
-
-# Fix: Ensure kill is inside the shell block
+# Preload the model
 RUN /bin/sh -c ' \
-    /bin/ollama serve & \
-    pid=$! && \
-    echo "Waiting for Ollama to be ready..." && \
+    /bin/ollama serve & pid=$!; \
     for i in {1..30}; do \
-        if curl -s http://localhost:11434/api/tags > /dev/null; then \
-            echo "Ollama is ready!" && \
-            break; \
-        fi; \
+        curl -s http://localhost:11434/api/tags > /dev/null && break; \
         sleep 1; \
-    done && \
-    /bin/ollama pull "$(cat /model_name.txt)" && \
-    echo "Shutting down Ollama server..." && \
+    done; \
+    /bin/ollama pull "$(cat /model_name.txt)"; \
     kill -15 $pid && wait $pid \
 '
