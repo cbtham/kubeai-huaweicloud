@@ -38,6 +38,3 @@ RUN /bin/sh -c ' \
     echo "Shutting down Ollama server..." && \
     kill -15 $pid && wait $pid \
 '
-
-# Start Ollama in the foreground when the container runs
-CMD ["ollama", "serve"]
