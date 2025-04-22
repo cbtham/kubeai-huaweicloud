@@ -1,0 +1,14 @@
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: qwen2.5coder-7b-ollama-t4
+spec:
+  features: ["TextGeneration"]
+  url: ollama://qwen2.5-coder:7b # "$MODEL_URL"
+  engine: OLlama
+  env:
+    OLLAMA_CONTEXT_LENGTH: "32768"
+  resourceProfile: 'nvidia-gpu-t4:1'
+  minReplicas: 1
+  maxReplicas: 1
+  scaleDownDelaySeconds: 3600 # Time in seconds to scale down, kill pod
