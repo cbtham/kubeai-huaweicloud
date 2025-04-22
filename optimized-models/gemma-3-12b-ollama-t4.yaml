@@ -1,0 +1,9 @@
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: gemma-3-12b-ollama-t4
+spec:
+  features: ["TextGeneration"]
+  url: ollama://gemma3:12b
+  engine: OLlama
+  resourceProfile: 'nvidia-gpu-t4:1'
