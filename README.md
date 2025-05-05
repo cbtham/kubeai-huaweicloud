@@ -36,12 +36,15 @@ Before running this, ensure you have the following,
    ```kubectl create namepace -n kubeai```
 2. Create pv and pvc for open-webui
    ```kubectl create -f pv-pvc.yaml -n kubeai```
-3. Deploy kubeai with custom-values.yaml
-   ```helm upgrade --install kubeai kubeai/kubeai -f custom-values.yaml  -n kubeai --wait --timeout 15m```
-4. Deploy models with kubeai-models.yaml
+3. Deploy kubeai with custom-values.yaml (INTERNET CONNECTED)
+   ```helm upgrade --install kubeai kubeai/kubeai -f custom-values.yaml -n kubeai --wait --timeout 15m```
+4. Deploy kubeai with custom-values.yaml (OFFLINE)
+   ```helm upgrade --install kubeai kubeai-0.XX.0.tgz -f custom-values.yaml  -n kubeai --wait --timeout 15m```
+   >Note: Get the tgz from kubeai release and change the version number to reflect the version you wish to deploy.
+6. Deploy models with kubeai-models.yaml
    ```helm upgrade kubeai-models kubeai/models -f ./kubeai-models.yaml -n kubeai --wait --timeout 15m```
-5. Create a Load Balancer service to access open-webui
+7. Create a Load Balancer service to access open-webui
    ```kubectl create -f elb-svc.yaml -n kubeai```
-6. Visit the public ip shown at elb-svc-openwebui at CCE > Services & ingress.
+8. Visit the public ip shown at elb-svc-openwebui at CCE > Services & ingress.
 <br />
       <img src="./architecture/open-webui-cce.png" alt="open-webui" style="width:60%; height:auto;">
