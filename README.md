@@ -27,7 +27,7 @@ This is good for:
 ## Pre-requisite
 Before running this, ensure you have the following,
 1. Huawei Cloud account
-2. Kubectl configured
+2. Kubectl configured (Either via a cloud VM, or on your local machine). Follow this for setup: https://support.huaweicloud.com/intl/en-us/usermanual-cce/cce_10_0107.html
 3. Helm installed
 
 ### To deploy
