@@ -33,7 +33,7 @@ Before running this, ensure you have the following,
 ### To deploy
 
 1. Create a namespace, in this example "kubeai"
-   ```kubectl create namepace -n kubeai```
+   ```kubectl create namespace kubeai```
 2. Create pv and pvc for open-webui
    ```kubectl create -f pv-pvc.yaml -n kubeai```
 3. Deploy kubeai with custom-values.yaml (INTERNET CONNECTED)
