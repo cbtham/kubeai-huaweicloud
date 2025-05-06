@@ -45,7 +45,7 @@ Before running this, ensure you have the following,
    ```helm upgrade --install kubeai kubeai-0.XX.0.tgz -f custom-values.yaml  -n kubeai --wait --timeout 15m```
    >Note: Get the tgz from kubeai release and change the version number to reflect the version you wish to deploy.
 6. Deploy models with kubeai-models.yaml
-   ```helm upgrade kubeai-models kubeai/models -f ./kubeai-models.yaml -n kubeai --wait --timeout 15m```
+   ```helm upgrade --install kubeai-models kubeai/models -f ./kubeai-models.yaml -n kubeai --wait --timeout 15m```
 7. Create a Load Balancer service to access open-webui
    ```kubectl create -f elb-svc.yaml -n kubeai```
 8. Visit the public ip shown at elb-svc-openwebui at CCE > Services & ingress.
