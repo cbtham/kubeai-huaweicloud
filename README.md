@@ -36,9 +36,12 @@ Before running this, ensure you have the following,
    ```kubectl create namespace kubeai```
 2. Create pv and pvc for open-webui
    ```kubectl create -f pv-pvc.yaml -n kubeai```
-3. Deploy kubeai with custom-values.yaml (INTERNET CONNECTED)
+3. Add KubeAI repo, SKIP this if you are installing offline.
+   ```helm repo add kubeai https://www.kubeai.org```
+   ```helm repo update```
+4. Deploy kubeai with custom-values.yaml (INTERNET CONNECTED)
    ```helm upgrade --install kubeai kubeai/kubeai -f custom-values.yaml -n kubeai --wait --timeout 15m```
-4. Deploy kubeai with custom-values.yaml (OFFLINE)
+5. Deploy kubeai with custom-values.yaml (OFFLINE)
    ```helm upgrade --install kubeai kubeai-0.XX.0.tgz -f custom-values.yaml  -n kubeai --wait --timeout 15m```
    >Note: Get the tgz from kubeai release and change the version number to reflect the version you wish to deploy.
 6. Deploy models with kubeai-models.yaml
