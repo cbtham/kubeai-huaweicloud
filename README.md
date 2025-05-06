@@ -1,4 +1,4 @@
-# KubeAI: AI Inferencing Operator on Huawei Cloud Managed Kubernetes Service (CCE)
+# AI Inferencing Operator on Huawei Cloud Managed Kubernetes Service (CCE)
 Deploy and scale machine learning models on Kubernetes. Built for LLMs, embeddings, and speech-to-text.
 For more information about the open-source project, refer https://github.com/substratusai/kubeai
 
