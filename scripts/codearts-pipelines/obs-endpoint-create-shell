@@ -1,0 +1,124 @@
+## Shell script to create new codearts service endpoint
+#!/bin/bash
+
+# Install package manager to install jq
+curl -sL https://get.arkade.dev | sh
+
+# get jq
+ark get jq
+
+# use jq
+/root/.arkade/bin/jq -V
+
+# Download OBS
+wget https://obs-community-intl.obs.ap-southeast-1.myhuaweicloud.com/obsutil/current/obsutil_linux_amd64.tar.gz
+tar -xzvf obsutil_linux_amd64.tar.gz
+
+# Check for version and cd into it
+obsutil_dir=$(find . -maxdepth 1 -type d -name "obsutil_linux_amd64_*" | head -n 1)
+if [[ -d "$obsutil_dir" ]]; then
+    cd "$obsutil_dir" || exit 1
+    echo "Changed directory to: $obsutil_dir"
+else
+    echo "Could not find extracted obsutil directory."
+    exit 1
+fi
+
+# Install OBS
+chmod 755 obsutil
+./obsutil version
+
+# Configure OBS
+./obsutil config -i=${ACCESS_KEY} -k=${SECRET_KEY} -e="obs.ap-southeast-3.myhuaweicloud.com"
+./obsutil cp obs://codearts-terraform-iac2/kubeconfigs/kubeconfig.yaml kubeconfig.yaml
+
+# Rehydrate parameters
+export domainName=${domainName}
+export username=${username}
+export password=${password}
+export project_uuid=${project_uuid}
+export region_name=${region_name}
+
+IAM_URL="https://iam.myhuaweicloud.com/v3/auth/tokens?nocatalog=true"
+BASE_URL="https://cloudpipeline-ext.ap-southeast-3.myhuaweicloud.com/v1/serviceconnection/endpoints"
+ENDPOINT_NAME="techwave25-kubeai-with-iac"
+PARSED_kubeconfig=$(/root/.arkade/bin/jq -c . kubeconfig.yaml | /root/.arkade/bin/jq -Rs . | sed 's/^"//; s/"$//')
+ENDPOINT_URL=$(grep -o '"externalCluster".*"server":"[^"]*"' kubeconfig.yaml | grep -o 'https://[^"]*')
+
+# Authentication JSON payload
+AUTH_DATA=$(cat <<EOF
+{
+  "auth": {
+    "identity": {
+      "methods": [
+        "password"
+      ],
+      "password": {
+        "user": {
+          "domain": {
+            "name": "${domainName}"
+          },
+          "name": "${username}",
+          "password": "${password}"
+        }
+      }
+    },
+    "scope": {
+      "project": {
+        "name": "ap-southeast-3"
+      }
+    }
+  }
+}
+EOF
+)
+
+# Send authentication request to get the x-auth-token
+RESPONSE=$(curl -i -X POST "${IAM_URL}" \
+    -H "Content-Type: application/json" \
+    -d "${AUTH_DATA}")
+
+# Extract token from headers
+X_AUTH_TOKEN=$(echo "${RESPONSE}" | grep -i "x-subject-token" | awk '{print $2}' | tr -d '\r')
+
+if [ -z "$X_AUTH_TOKEN" ]; then
+    echo "Failed to retrieve x-auth-token."
+    exit 1
+fi
+
+echo "x-auth-token: $X_AUTH_TOKEN"
+
+# POST data
+POST_DATA=$(cat <<EOF
+{
+  "project_uuid": "${project_uuid}",
+  "region_name": "${region_name}",
+  "authorization": {
+    "parameters": {
+      "kubeconfig": "${PARSED_kubeconfig}",
+      "code": "",
+      "state": "",
+      "redirectURI": ""
+    },
+    "scheme": "endpoint-auth-scheme-k8s"
+  },
+  "data": {},
+  "name": "${ENDPOINT_NAME}",
+  "url": "${ENDPOINT_URL}",
+  "module_id": "devcloud2018.deploy_k8s_connection.endponit"
+}
+EOF
+)
+
+# Send POST request
+POST_RESPONSE=$(curl -s -X POST "${BASE_URL}" \
+  -H "Content-Type: application/json" \
+  -H "X-Auth-Token: ${X_AUTH_TOKEN}" \
+  -d "${POST_DATA}")
+
+echo "POST Request Response:"
+if command -v jq &> /dev/null; then
+  echo "${POST_RESPONSE}" | jq .
+else
+  echo "${POST_RESPONSE}"
+fi
