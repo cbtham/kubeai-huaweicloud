@@ -1,0 +1,15 @@
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: llama3.2-1b-vllm
+spec:
+  features: [TextGeneration]
+  owner: neuralmagic
+  url: hf://kmk4444/llama3.2-1b-vllm
+  engine: VLLM
+  args:
+    - --max-model-len=16384
+    - --max-num-batched-token=16384
+    - --gpu-memory-utilization=0.9
+    - --disable-log-requests
+  resourceProfile: nvidia-gpu-t4:1
