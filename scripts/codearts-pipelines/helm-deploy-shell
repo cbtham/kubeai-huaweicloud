@@ -1,0 +1,4 @@
+cd /usr/local/kubeai
+echo $(ls)
+helm version
+helm upgrade --install kubeai kubeai-0.20.0.tgz -n <namespace> -f custom-values.yaml --timeout=15m
