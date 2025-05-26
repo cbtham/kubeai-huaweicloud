@@ -1,0 +1,16 @@
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: qcoder2.5-7b-instruct-vllm-t4
+spec:
+  features: [TextGeneration]
+  owner: unsloth
+  url: hf://unsloth/qwen2.5-coder-7b
+  engine: VLLM
+  args:
+    - --max-model-len=32768
+    - --max-num-batched-token=32768
+    - --gpu-memory-utilization=0.9
+    - --disable-log-requests
+    - --dtype=half
+  resourceProfile: nvidia-gpu-t4:1
