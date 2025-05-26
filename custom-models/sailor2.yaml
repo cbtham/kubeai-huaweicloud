@@ -1,0 +1,11 @@
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: sailor2-1b-cpu-codearts
+spec:
+  features: [TextGeneration]
+  image: swr.ap-southeast-3.myhuaweicloud.com/organization/llm-sailor2:v1
+  url: ollama://sailor2:1b
+  engine: OLlama
+  minReplicas: 0
+  resourceProfile: cpu:1
