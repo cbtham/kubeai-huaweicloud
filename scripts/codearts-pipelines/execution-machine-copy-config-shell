@@ -1,0 +1,26 @@
+# Download OBS
+wget https://obs-community-intl.obs.ap-southeast-1.myhuaweicloud.com/obsutil/current/obsutil_linux_amd64.tar.gz
+tar -xzvf obsutil_linux_amd64.tar.gz
+
+# Check for version and cd into it
+obsutil_dir=$(find . -maxdepth 1 -type d -name "obsutil_linux_amd64_*" | head -n 1)
+if [[ -d "$obsutil_dir" ]]; then
+    cd "$obsutil_dir" || exit 1
+    echo "Changed directory to: $obsutil_dir"
+else
+    echo "Could not find extracted obsutil directory."
+    exit 1
+fi
+
+# Install OBS
+chmod 755 obsutil
+./obsutil version
+
+# Configure OBS
+./obsutil config -i=${ACCESS_KEY} -k=${SECRET_KEY} -e="obs.ap-southeast-3.myhuaweicloud.com"
+
+# Download iac-generated kubeconfig
+./obsutil cp obs://codearts-terraform-iac2/kubeconfigs/kubeconfig.yaml kubeconfig.yaml
+
+# Move kubeconfig to access cluster
+yes | cp -f kubeconfig.yaml $HOME/.kube/config
