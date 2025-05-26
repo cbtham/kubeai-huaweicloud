@@ -1,0 +1,30 @@
+# BE CAREFUL ON VERSION, TFSTATE MAY NOT BE ABLE TO SAVE IN OBS
+wget https://releases.hashicorp.com/terraform/1.11.1/terraform_1.11.1_linux_amd64.zip
+unzip terraform_1.11.1_linux_amd64.zip
+sudo mv terraform /usr/local/bin/
+terraform --version
+
+# REQUIRED to set HWC terraform provider
+export AWS_ACCESS_KEY_ID=${ACCESS_KEY}
+export AWS_SECRET_ACCESS_KEY=${SECRET_KEY}
+mkdir $HOME/.aws
+echo [default] >> $HOME/.aws/credentials
+echo aws_access_key_id = ${AWS_ACCESS_KEY_ID} >> $HOME/.aws/credentials
+echo aws_access_key_id = ${ACCESS_KEY} >> $HOME/.aws/credentials
+echo aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY} >> $HOME/.aws/credentials
+
+# Pass Key to Terraform
+export TF_VAR_access_key=${ACCESS_KEY}
+export TF_VAR_secret_key=${SECRET_KEY}
+
+# Initialize Terraform
+terraform init
+
+# Run Terraform Plan
+terraform plan
+
+# Run Terraform Apply
+terraform apply --auto-approve
+
+## Run Terraform Destroy
+#terraform destroy --auto-approve
