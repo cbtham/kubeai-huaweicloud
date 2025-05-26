@@ -1,0 +1,55 @@
+# Source: models/templates/models.yaml
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: deepseek-r1-1.5b-cpu
+spec:
+  features: [TextGeneration]
+  url: ollama://deepseek-r1:1.5b
+  engine: OLlama
+  minReplicas: 0
+  resourceProfile: cpu:1
+
+---
+
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: deepseek-r1-1.5b-gpu
+spec:
+  features: [TextGeneration]
+  url: ollama://deepseek-r1:1.5b
+  engine: OLlama
+  minReplicas: 0
+  resourceProfile: nvidia-gpu-t4:1
+
+---
+
+# apiVersion: kubeai.org/v1
+# kind: Model
+# metadata:
+#   name: sailor2-1b-ollama-cpu
+# spec:
+#   features: [TextGeneration]
+#   image: swr.ap-southeast-3.myhuaweicloud.com/codearts-demo/llm-sailor2:v1
+#   url: ollama://sailor2:1b
+#   engine: OLlama
+#   minReplicas: 0
+#   resourceProfile: cpu:1
+
+---
+
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: qwen2.5coder-7b-ollama-t4
+spec:
+  features: ["TextGeneration"]
+  url: ollama://qwen2.5-coder:7b # "$MODEL_URL"
+  engine: OLlama
+  env:
+    OLLAMA_CONTEXT_LENGTH: "32768"
+  resourceProfile: 'nvidia-gpu-t4:1'
+  minReplicas: 1
+  maxReplicas: 1
+  scaleDownDelaySeconds: 7200 # Time in seconds to scale down / kill pod
